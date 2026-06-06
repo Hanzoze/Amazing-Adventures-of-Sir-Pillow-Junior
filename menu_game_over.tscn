@@ -20,7 +20,7 @@ offset_right = 1165.0
 offset_bottom = 664.0
 color = Color(1, 0.796, 0.27999997, 1)
 
-[node name="Label" type="Label" parent="." unique_id=218600105]
+[node name="GameOverLabel" type="Label" parent="." unique_id=218600105]
 layout_mode = 0
 offset_left = 2.0
 offset_top = 27.0
@@ -51,5 +51,25 @@ theme_override_fonts/font = ExtResource("1_qpg8w")
 theme_override_font_sizes/font_size = 37
 text = "MAIN MENU"
 flat = true
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=403804945]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 350.0
+offset_right = 624.0
+offset_bottom = 405.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "##"
+
+[node name="YourScoreLabel" type="Label" parent="." unique_id=1502064613]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 300.0
+offset_right = 669.0
+offset_bottom = 342.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Your score:"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -12,11 +12,9 @@ var is_dead: bool = false
 @export var ROTATION_SPEED: float = 10.0
 @export var FLIP_ROTATION: bool = true
 
-# Настройки аркадной гравитации
 @export var GRAVITY_MULTIPLIER: float = 2.0
 @export var FALL_GRAVITY_MULTIPLIER: float = 8.0
 
-# Настройки комбо-системы и динамики движения
 const ATTACK_DURATION: float = 0.97
 const INPUT_WINDOW_DELAY: float = 0.12
 const LUNGE_DURATION: float = 0.18
@@ -29,46 +27,36 @@ const LUNGE_DAMPING: float = 15.0
 var base_gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var current_lunge_velocity: Vector3 = Vector3.ZERO
 
-# Переменные для отслеживания комбо
 var combo_step: int = 0
 var is_attacking: bool = false
 var can_attack: bool = true
 var attack_timer: float = 0.0
 var lunge_timer: float = 0.0
-
-# Флаг, который гарантирует, что за одну анимацию урон нанесётся строго ОДИН раз
+# Ensures damage is dealt exactly once per strike
 var damage_inflicted_this_strike: bool = false
-
-# Буфер — запоминает клик если нажали слишком рано
+# Buffers an attack input if pressed too early
 var has_buffered_attack: bool = false
 
 
 func _ready() -> void:
 	if animation_tree:
 		animation_tree.active = true
-	else:
-		printerr("[ИГРОК] ERROR: AnimationTree не найден!")
-	
 	if hud:
 		hud.call_deferred("init_health", max_health)
-		
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
-	
-	# 1. Аркадная гравитация
+
 	if not is_on_floor():
 		if velocity.y > 0:
 			velocity.y -= base_gravity * GRAVITY_MULTIPLIER * delta
 		else:
 			velocity.y -= base_gravity * FALL_GRAVITY_MULTIPLIER * delta
 
-	# 2. Обработка таймера атаки
 	if is_attacking:
 		attack_timer -= delta
 
-		# ЛОГИКА НАНЕСЕНИЯ УРОНА ПО ВРЕМЕНИ
 		if not damage_inflicted_this_strike and attack_timer <= 0.72:
 			deal_damage_frame()
 
@@ -81,18 +69,15 @@ func _physics_process(delta: float) -> void:
 		if attack_timer <= 0.0:
 			reset_combo()
 
-	# 3. Прыжок — запрещён во время атаки
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and not is_attacking:
 		velocity.y = JUMP_VELOCITY
 
-	# 4. Ввод атаки с буфером
 	if Input.is_action_just_pressed("click") and is_on_floor():
 		if can_attack:
 			trigger_attack()
 		elif is_attacking and not has_buffered_attack and combo_step < 3:
 			has_buffered_attack = true
 
-	# 5. Направление движения с учётом камеры
 	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var camera := get_viewport().get_camera_3d()
 	var direction := Vector3.ZERO
@@ -107,7 +92,6 @@ func _physics_process(delta: float) -> void:
 		cam_right = cam_right.normalized()
 		direction = (cam_right * input_dir.x + cam_forward * -input_dir.y).normalized()
 
-	# 6. Скорость движения
 	if is_attacking:
 		if lunge_timer > 0.0:
 			lunge_timer -= delta
@@ -136,7 +120,6 @@ func _physics_process(delta: float) -> void:
 		var horizontal_velocity := Vector2(velocity.x, velocity.z)
 		var moving := horizontal_velocity.length() > 0.2
 		var in_air := not is_on_floor()
-
 		animation_tree.set("parameters/conditions/is_jumping", in_air)
 		animation_tree.set("parameters/conditions/is_moving", moving and not in_air)
 		animation_tree.set("parameters/conditions/is_idle", not moving and not in_air)
@@ -148,13 +131,11 @@ func trigger_attack() -> void:
 		reset_combo()
 		return
 
-	print("[ИГРОК] Триггер атаки! Шаг комбо: ", combo_step)
 	is_attacking = true
 	can_attack = false
 	attack_timer = ATTACK_DURATION
 	lunge_timer = LUNGE_DURATION
-	damage_inflicted_this_strike = false 
-
+	damage_inflicted_this_strike = false
 	animation_tree.set("parameters/conditions/attack_ended", false)
 
 	if knight_mesh:
@@ -213,32 +194,26 @@ func rotate_to_mouse() -> void:
 
 
 func deal_damage_frame() -> void:
-	damage_inflicted_this_strike = true 
-	
+	damage_inflicted_this_strike = true
 	if attack_area:
-		var overlapping_bodies = attack_area.get_overlapping_bodies()
-		for body in overlapping_bodies:
+		for body in attack_area.get_overlapping_bodies():
 			if body.has_method("take_damage"):
-				var damage_to_deal: float = 35.0
-				if combo_step == 3:
-					damage_to_deal = 50.0 
+				# Combo step 3 deals bonus damage
+				var damage_to_deal: float = 50.0 if combo_step == 3 else 35.0
 				body.take_damage(damage_to_deal)
-				
+
 
 func take_damage(amount: float) -> void:
 	if is_dead:
 		return
 	current_health -= amount
-	print("[ИГРОК] HP: ", current_health)
-	
-	# Обновляем полоску
 	if hud:
 		hud.update_health(current_health)
-	
 	if current_health <= 0:
 		die()
 
 
 func die() -> void:
 	is_dead = true
+	queue_free()
 	get_tree().change_scene_to_file("res://menu_game_over.tscn")
