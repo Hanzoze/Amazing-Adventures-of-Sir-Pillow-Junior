@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ce2ldnl6vcn31"]
+
+[ext_resource type="PackedScene" uid="uid://c7iup81yu6qxr" path="res://assets/models/water.glb" id="1_qi1wl"]
+
+[node name="water" unique_id=1757955970 instance=ExtResource("1_qi1wl")]
+
+[node name="hex_water" parent="." index="0" unique_id=2065176866]
+layers = 32
+
+[node name="hex_water" parent="hex_water" index="0" unique_id=1274030312]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" parent="hex_water/hex_water" index="0" unique_id=1404565106]
+disabled = true

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cllkkqcbyt3ui"]
+
+[ext_resource type="PackedScene" uid="uid://ckl2uakpxtk2n" path="res://assets/models/grass.glb" id="1_kl2qe"]
+
+[node name="grass" unique_id=2132940831 instance=ExtResource("1_kl2qe")]
+
+[node name="hex_grass" parent="hex_grass" parent_id_path=PackedInt32Array(2004606575) index="0" unique_id=1218551587]
+collision_mask = 0

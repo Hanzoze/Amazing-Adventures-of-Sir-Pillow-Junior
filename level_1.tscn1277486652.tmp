@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://ulihobdci26k"]
+
+[ext_resource type="MeshLibrary" uid="uid://b135oc86ygjcb" path="res://resources/worldBlocks-v2.meshlib" id="1_3hls8"]
+[ext_resource type="PackedScene" uid="uid://c0a4ctxf24wwx" path="res://world.tscn" id="2_hbghi"]
+[ext_resource type="PackedScene" uid="uid://ywwrvdm4wpw" path="res://player.tscn" id="3_hn12h"]
+[ext_resource type="Script" uid="uid://0jglt8vn3lub" path="res://camera_3d.gd" id="4_ihfcg"]
+[ext_resource type="PackedScene" uid="uid://b5a23adrslm56" path="res://demon.tscn" id="5_rka8t"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ilcil"]
+sky_top_color = Color(0.34814996, 0.8622553, 0.78893596, 1)
+sky_horizon_color = Color(0.23529412, 0.7411765, 0.7137255, 1)
+ground_bottom_color = Color(0.06387237, 0.19692591, 0.21090463, 1)
+ground_horizon_color = Color(0.23469195, 0.7411306, 0.71489316, 1)
+
+[sub_resource type="Sky" id="Sky_3hls8"]
+sky_material = SubResource("ProceduralSkyMaterial_ilcil")
+
+[sub_resource type="Environment" id="Environment_hbghi"]
+background_mode = 2
+sky = SubResource("Sky_3hls8")
+
+[node name="Level1" type="Node3D" unique_id=999077060]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=642265035]
+environment = SubResource("Environment_hbghi")
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1975356818]
+mesh_library = ExtResource("1_3hls8")
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="HexWorld" parent="." unique_id=1708677408 instance=ExtResource("2_hbghi")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 1.3826768)
+
+[node name="Player" parent="." unique_id=1707884948 instance=ExtResource("3_hn12h")]
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=464135928]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0)
+current = true
+script = ExtResource("4_ihfcg")
+
+[node name="Demon" parent="." unique_id=104248780 instance=ExtResource("5_rka8t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)

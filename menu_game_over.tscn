@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://dw1oxgfuiv3jj"]
+
+[ext_resource type="Script" uid="uid://dlc27x1tmk3kn" path="res://menu_game_over.gd" id="1_jfflx"]
+[ext_resource type="FontFile" uid="uid://bm8qgbquokmbr" path="res://assets/fonts/PlaywriteGBJ-VariableFont_wght.ttf" id="1_qpg8w"]
+
+[node name="MenuGameOver" type="Control" unique_id=1798527827]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jfflx")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=266140577]
+layout_mode = 0
+offset_left = -11.0
+offset_top = -12.0
+offset_right = 1165.0
+offset_bottom = 664.0
+color = Color(1, 0.796, 0.27999997, 1)
+
+[node name="Label" type="Label" parent="." unique_id=218600105]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 27.0
+offset_right = 1153.0
+offset_bottom = 207.0
+theme_override_colors/font_color = Color(1, 0, 0.1333332, 1)
+theme_override_colors/font_shadow_color = Color(0.9408334, 1, 0.29000002, 0.31764707)
+theme_override_colors/font_outline_color = Color(0.83137256, 1, 0.09019608, 1)
+theme_override_constants/shadow_offset_x = 9
+theme_override_constants/shadow_offset_y = 9
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("1_qpg8w")
+theme_override_font_sizes/font_size = 144
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=1441193068]
+layout_mode = 0
+offset_left = 463.0
+offset_top = 406.0
+offset_right = 727.0
+offset_bottom = 476.0
+theme_override_colors/font_color = Color(0.86, 0, 0.014333115, 1)
+theme_override_colors/font_focus_color = Color(0.48, 0, 0.007999877, 1)
+theme_override_colors/font_pressed_color = Color(0.32, 0, 0.005333252, 1)
+theme_override_colors/font_hover_color = Color(0.47843137, 0, 0.007843138, 1)
+theme_override_fonts/font = ExtResource("1_qpg8w")
+theme_override_font_sizes/font_size = 37
+text = "MAIN MENU"
+flat = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

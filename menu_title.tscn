@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://br3kg63mcdaiy"]
+
+[ext_resource type="FontFile" uid="uid://bm8qgbquokmbr" path="res://assets/fonts/PlaywriteGBJ-VariableFont_wght.ttf" id="1_a1x2l"]
+[ext_resource type="Script" uid="uid://dexbahx4jv30e" path="res://menu_title.gd" id="1_n3opb"]
+
+[node name="MenuTitle" type="Control" unique_id=757022373]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_n3opb")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2020574454]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -9.0
+offset_right = 1163.0
+offset_bottom = 660.0
+color = Color(0.27999997, 1, 0.628, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1223436149]
+layout_mode = 0
+offset_top = 18.0
+offset_right = 1153.0
+offset_bottom = 303.0
+theme_override_colors/font_color = Color(0.4666667, 0, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.29000002, 0.51483345, 1, 0.31764707)
+theme_override_colors/font_outline_color = Color(0.09019608, 0.9529412, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("1_a1x2l")
+theme_override_font_sizes/font_size = 56
+text = "Amazing Adventures 
+of Sir Pillow 
+Junior"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=2058338834]
+layout_mode = 0
+offset_left = 499.0
+offset_top = 331.0
+offset_right = 639.0
+offset_bottom = 384.0
+theme_override_colors/font_color = Color(0.15766673, 0, 0.86, 1)
+theme_override_colors/font_focus_color = Color(0.10083337, 0, 0.55, 1)
+theme_override_colors/font_pressed_color = Color(0.051333353, 0, 0.28, 1)
+theme_override_fonts/font = ExtResource("1_a1x2l")
+theme_override_font_sizes/font_size = 44
+text = "Play"
+flat = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://ccexpd1p84mib"]
+
+[ext_resource type="PackedScene" uid="uid://cefkcvn4blu3h" path="res://assets/models/high_grass.glb" id="1_oo8cv"]
+
+[node name="high_grass" unique_id=1183917338 instance=ExtResource("1_oo8cv")]

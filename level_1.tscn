@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://ulihobdci26k"]
+
+[ext_resource type="MeshLibrary" uid="uid://b135oc86ygjcb" path="res://resources/worldBlocks-v2.meshlib" id="1_3hls8"]
+[ext_resource type="Script" uid="uid://ckr8yl8qrbkxa" path="res://level_1.gd" id="1_bjebc"]
+[ext_resource type="PackedScene" uid="uid://c0a4ctxf24wwx" path="res://world.tscn" id="2_hbghi"]
+[ext_resource type="PackedScene" uid="uid://ywwrvdm4wpw" path="res://player.tscn" id="3_hn12h"]
+[ext_resource type="Script" uid="uid://0jglt8vn3lub" path="res://camera_3d.gd" id="4_ihfcg"]
+[ext_resource type="PackedScene" uid="uid://b5a23adrslm56" path="res://demon.tscn" id="5_rka8t"]
+[ext_resource type="Script" uid="uid://dfhrlv403sgu6" path="res://kill_zone.gd" id="6_5hph3"]
+[ext_resource type="PackedScene" uid="uid://dfex65kek0dxn" path="res://hud.tscn" id="7_j7kpp"]
+[ext_resource type="Script" uid="uid://85otit40b6ot" path="res://wave_manager.gd" id="9_5rr72"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ilcil"]
+sky_top_color = Color(0.34814996, 0.8622553, 0.78893596, 1)
+sky_horizon_color = Color(0.23529412, 0.7411765, 0.7137255, 1)
+ground_bottom_color = Color(0.06387237, 0.19692591, 0.21090463, 1)
+ground_horizon_color = Color(0.23469195, 0.7411306, 0.71489316, 1)
+
+[sub_resource type="Sky" id="Sky_3hls8"]
+sky_material = SubResource("ProceduralSkyMaterial_ilcil")
+
+[sub_resource type="Environment" id="Environment_hbghi"]
+background_mode = 2
+sky = SubResource("Sky_3hls8")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rka8t"]
+size = Vector3(200, 10, 200)
+
+[node name="Level1" type="Node3D" unique_id=999077060]
+script = ExtResource("1_bjebc")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=642265035]
+environment = SubResource("Environment_hbghi")
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1975356818]
+mesh_library = ExtResource("1_3hls8")
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="HexWorld" parent="." unique_id=1708677408 instance=ExtResource("2_hbghi")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="Player" parent="." unique_id=1707884948 instance=ExtResource("3_hn12h")]
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=464135928]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0)
+current = true
+script = ExtResource("4_ihfcg")
+
+[node name="AbyssKillZone" type="Area3D" parent="." unique_id=1917759379]
+collision_layer = 32
+collision_mask = 6
+script = ExtResource("6_5hph3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AbyssKillZone" unique_id=1081231011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
+shape = SubResource("BoxShape3D_rka8t")
+
+[node name="HUD" parent="." unique_id=863638061 instance=ExtResource("7_j7kpp")]
+
+[node name="WaveManager" type="Node" parent="." unique_id=276304872 node_paths=PackedStringArray("spawn_points", "hud")]
+script = ExtResource("9_5rr72")
+enemy_scene = ExtResource("5_rka8t")
+spawn_points = [NodePath("../SpawnPoints/Spawn1"), NodePath("../SpawnPoints/Spawn2"), NodePath("../SpawnPoints/Spawn3")]
+hud = NodePath("../HUD")
+
+[node name="SpawnPoints" type="Node3D" parent="." unique_id=984990090]
+
+[node name="Spawn1" type="Marker3D" parent="SpawnPoints" unique_id=561266450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, 0)
+
+[node name="Spawn2" type="Marker3D" parent="SpawnPoints" unique_id=54266301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 6)
+
+[node name="Spawn3" type="Marker3D" parent="SpawnPoints" unique_id=2916690]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 33)

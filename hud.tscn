@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://dfex65kek0dxn"]
+
+[ext_resource type="Script" uid="uid://pa4eg6lu5idr" path="res://hud.gd" id="1_8sq4i"]
+[ext_resource type="Texture2D" uid="uid://btc3nqcnppcld" path="res://assets/images/Demon.png" id="1_37p78"]
+[ext_resource type="FontFile" uid="uid://bm8qgbquokmbr" path="res://assets/fonts/PlaywriteGBJ-VariableFont_wght.ttf" id="3_640wx"]
+[ext_resource type="Script" uid="uid://cxp6k87dyhrfd" path="res://health_bar.gd" id="4_640wx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2snw"]
+bg_color = Color(0, 0, 0, 0.36862746)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a2258"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xsix"]
+bg_color = Color(0.13035712, 0.70371866, 0.5013747, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rftc2"]
+bg_color = Color(0.10524041, 0.10524041, 0.1052404, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0, 0, 0, 0.27450982)
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_61f8s"]
+bg_color = Color(0.8500505, 0.85005057, 0.85005045, 1)
+
+[node name="HUD" type="CanvasLayer" unique_id=863638061]
+script = ExtResource("1_8sq4i")
+
+[node name="Panel" type="Panel" parent="." unique_id=490017349]
+offset_left = 60.0
+offset_top = 99.0
+offset_right = 360.0
+offset_bottom = 183.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_n2snw")
+metadata/_edit_group_ = true
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=730794174]
+z_index = 1
+offset_left = 55.0
+offset_top = 43.0
+offset_right = 615.0
+offset_bottom = 71.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_a2258")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1xsix")
+value = 60.0
+show_percentage = false
+script = ExtResource("4_640wx")
+metadata/_edit_group_ = true
+
+[node name="DamageBar" type="ProgressBar" parent="HealthBar" unique_id=353165594]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_rftc2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_61f8s")
+value = 80.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="HealthBar" unique_id=1411177664]
+wait_time = 0.2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=526549139]
+offset_left = 83.0
+offset_top = 106.0
+offset_right = 146.0
+offset_bottom = 169.0
+texture = ExtResource("1_37p78")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=1406879599]
+offset_left = 154.0
+offset_top = 118.0
+offset_right = 179.0
+offset_bottom = 169.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_640wx")
+theme_override_font_sizes/font_size = 30
+text = "X"
+
+[node name="EnemiesCounterLabel" type="Label" parent="." unique_id=236803784]
+offset_left = 192.0
+offset_top = 120.0
+offset_right = 290.0
+offset_bottom = 208.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_640wx")
+theme_override_font_sizes/font_size = 30
+text = "##"
+
+[connection signal="timeout" from="HealthBar/Timer" to="HealthBar" method="_on_timer_timeout"]

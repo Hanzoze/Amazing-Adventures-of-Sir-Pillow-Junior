@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://ywwrvdm4wpw"]
+
+[ext_resource type="PackedScene" uid="uid://baoa7nvw1h2hr" path="res://knight.tscn" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://xjpwx247pocg" path="res://player.gd" id="1_onrkg"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hqtel"]
+animation = &"Knight_Attack1/mixamo_com"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sweqy"]
+animation = &"Knight_Attack2/mixamo_com"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2hs0m"]
+animation = &"Knight_Attack3/mixamo_com"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_i3pqv"]
+animation = &"Knight_Fall/mixamo_com"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_onrkg"]
+animation = &"Knight_Idle/mixamo_com"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1jxqw"]
+animation = &"Knight_Run/mixamo_com"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dw050"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b26j0"]
+xfade_time = 0.15
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_n7ghd"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hqtel"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"is_jumping"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sweqy"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"is_jumping"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2hs0m"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1jxqw"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nvl01"]
+advance_mode = 2
+advance_condition = &"start_attack"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ivps1"]
+advance_mode = 2
+advance_condition = &"start_attack"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_urp6f"]
+advance_mode = 2
+advance_condition = &"start_attack"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bwjto"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"shoot_attack_2"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_606se"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"shoot_attack_3"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u1c27"]
+advance_mode = 2
+advance_condition = &"attack_ended"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_op7ga"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"attack_ended"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q13i1"]
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"attack_ended"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_5tmop"]
+states/Attack_1/node = SubResource("AnimationNodeAnimation_hqtel")
+states/Attack_1/position = Vector2(772.0392, 173.16486)
+states/Attack_2/node = SubResource("AnimationNodeAnimation_sweqy")
+states/Attack_2/position = Vector2(663.41486, 247.01826)
+states/Attack_3/node = SubResource("AnimationNodeAnimation_2hs0m")
+states/Attack_3/position = Vector2(506.1988, 246.7958)
+states/End/position = Vector2(908.8, 84.35605)
+states/Fall/node = SubResource("AnimationNodeAnimation_i3pqv")
+states/Fall/position = Vector2(587.5387, 161.64812)
+states/Idle/node = SubResource("AnimationNodeAnimation_onrkg")
+states/Idle/position = Vector2(429.93872, 86.57119)
+states/Run/node = SubResource("AnimationNodeAnimation_1jxqw")
+states/Run/position = Vector2(728.3388, 84.804726)
+states/Start/position = Vector2(154.4, 90.45794)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_dw050"), "Idle", "Run", SubResource("AnimationNodeStateMachineTransition_b26j0"), "Run", "Idle", SubResource("AnimationNodeStateMachineTransition_n7ghd"), "Idle", "Fall", SubResource("AnimationNodeStateMachineTransition_hqtel"), "Run", "Fall", SubResource("AnimationNodeStateMachineTransition_sweqy"), "Fall", "Idle", SubResource("AnimationNodeStateMachineTransition_2hs0m"), "Fall", "Run", SubResource("AnimationNodeStateMachineTransition_1jxqw"), "Idle", "Attack_1", SubResource("AnimationNodeStateMachineTransition_nvl01"), "Fall", "Attack_1", SubResource("AnimationNodeStateMachineTransition_ivps1"), "Run", "Attack_1", SubResource("AnimationNodeStateMachineTransition_urp6f"), "Attack_1", "Attack_2", SubResource("AnimationNodeStateMachineTransition_bwjto"), "Attack_2", "Attack_3", SubResource("AnimationNodeStateMachineTransition_606se"), "Attack_1", "Idle", SubResource("AnimationNodeStateMachineTransition_u1c27"), "Attack_2", "Idle", SubResource("AnimationNodeStateMachineTransition_op7ga"), "Attack_3", "Idle", SubResource("AnimationNodeStateMachineTransition_q13i1")]
+graph_offset = Vector2(34.745804, 17.74241)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_onrkg"]
+size = Vector3(2, 4, 2.2680664)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_onrkg"]
+radius = 1.1704102
+height = 4.2264404
+
+[node name="Player" type="CharacterBody3D" unique_id=1707884948]
+collision_layer = 2
+collision_mask = 37
+script = ExtResource("1_onrkg")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=96914209]
+root_node = NodePath("../Knight")
+tree_root = SubResource("AnimationNodeStateMachine_5tmop")
+anim_player = NodePath("../Knight/AnimationPlayer")
+parameters/conditions/attack_ended = false
+parameters/conditions/is_idle = false
+parameters/conditions/is_jumping = false
+parameters/conditions/is_moving = false
+parameters/conditions/shoot_attack_2 = false
+parameters/conditions/shoot_attack_3 = false
+parameters/conditions/start_attack = false
+
+[node name="Knight" parent="." unique_id=1544443683 instance=ExtResource("1_4flbx")]
+
+[node name="Armature" parent="Knight" index="0" unique_id=620796319]
+transform = Transform3D(0.99962103, -0.022121504, -0.016386122, 0.013590969, -0.12106971, 0.99255085, -0.023940593, -0.99239755, -0.12072315, -0.011244149, -0.104337454, 0.28023487)
+
+[node name="Skeleton3D" parent="Knight/Armature" index="0" unique_id=998064197]
+bones/1/rotation = Quaternion(0.023599876, -0.00016509983, -0.0010279883, 0.99972105)
+bones/2/rotation = Quaternion(0.047186434, -0.00026961922, -0.0024247733, 0.9988831)
+bones/3/rotation = Quaternion(-0.015279146, -0.0023754893, -0.010415258, 0.9998262)
+bones/5/rotation = Quaternion(0.021560615, 0.07554701, -0.8614471, 0.5017336)
+bones/6/rotation = Quaternion(0.2221681, 0.073943995, -0.34828994, 0.9076717)
+bones/7/rotation = Quaternion(0.0586438, -0.00033953995, -4.5407996e-05, 0.998279)
+bones/8/rotation = Quaternion(0.11448087, 0.048614953, -0.012938468, 0.9921509)
+bones/10/rotation = Quaternion(0.024100173, -0.10929039, 0.8640307, 0.49084198)
+bones/11/rotation = Quaternion(0.2667577, -0.17407131, 0.2853191, 0.9039539)
+bones/12/rotation = Quaternion(0.14975318, 0.0003360906, 0.00011557808, 0.98872346)
+bones/13/rotation = Quaternion(-0.0047285366, 0.04445736, 0.063028485, 0.9970099)
+bones/15/rotation = Quaternion(0.1280914, 0.12838233, 0.9803568, -0.07753097)
+bones/16/rotation = Quaternion(-0.31177178, 0.08805807, 0.008357464, 0.9460308)
+bones/17/rotation = Quaternion(0.7819291, -0.041841622, -0.048344098, 0.62008005)
+bones/19/rotation = Quaternion(-0.08600163, 0.13154732, 0.9822972, 0.10193739)
+bones/20/rotation = Quaternion(-0.3365364, -0.07113226, 0.06244984, 0.93690103)
+bones/21/rotation = Quaternion(0.79639775, -0.012151215, 0.02224721, 0.60424167)
+
+[node name="AttackArea" type="Area3D" parent="Knight" unique_id=597727780]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Knight/AttackArea" unique_id=1824321555]
+shape = SubResource("BoxShape3D_onrkg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=651362047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7876587, 0)
+shape = SubResource("CapsuleShape3D_onrkg")
+
+[editable path="Knight"]
